@@ -1,0 +1,13 @@
+variable "resource_group_name" {}
+#variable "vnet" {}
+variable "subnet" {}
+variable "location" {}
+variable "Machine_Name" {}
+variable "Machine_size" {}
+variable "Machine_Image_name" {}
+variable "NIC_Name" {}
+#variable "Network_Security_Group" {}
+variable "Storage_Account_Tier" {}
+variable "Disk_Name" {}
+variable "User_Name" {}
+variable "Password" {}

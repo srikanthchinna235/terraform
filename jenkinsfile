@@ -1,0 +1,26 @@
+node ('master'){
+        ansiColor('xterm') {
+    }
+    //cleanWs()
+    stage('SCM') {
+        git credentialsId: 'dev-github', url: 'https://dev-github.albertsons.com/albertsons/platform_devops.git', branch: 'master'
+
+    }
+
+    stage('Set Terraform path') {
+    sh '/usr/local/bin/terraform --version'
+        }
+        
+        stage('Provision infrastructure') {
+               sh '''
+                 export ARM_CLIENT_SECRET=${ARM_CLIENT_SECRET}
+                 export ARM_TENANT_ID=${ARM_TENANT_ID}
+                 export ARM_SUBSCRIPTION_ID=${ARM_SUBSCRIPTION_ID}
+                 export ARM_CLIENT_ID=${ARM_CLIENT_ID}
+               '''
+               sh '/usr/local/bin/terraform init'
+               sh '/usr/local/bin/terraform plan  -var-file="params.tfvars"'
+               sh '/usr/local/bin/terraform apply -var-file="params.tfvars" -auto-approve'
+
+    }
+}
